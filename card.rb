@@ -1,3 +1,3 @@
 class Card
-  attr_accessor :number
+  attr_accessor :number, :suit
 end
