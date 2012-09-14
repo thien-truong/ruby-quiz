@@ -7,10 +7,6 @@ class TestEncryptor < Test::Unit::TestCase
     @encryptor = Encryptor.new(@message)
   end
 
-  def test_has_message
-    assert_equal(@message, @encryptor.message)
-  end
-
   def test_prepares_message
     @encryptor.prepare_message
     assert_equal("THISI SATES TXXXX", @encryptor.message)
