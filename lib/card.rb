@@ -1,8 +1,10 @@
 class Card
-  attr_reader :number, :suit
+  def initialize(value)
+    @value = value
+  end
 
-  def initialize(number, suit)
-    @number = number
-    @suit = suit
+  def to_s
+    hash = Hash[(1..26).zip(('A'..'Z'))]
+    hash[@value]
   end
 end
