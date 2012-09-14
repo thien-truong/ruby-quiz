@@ -1,5 +1,5 @@
 require "test/unit"
-require_relative "card"
+require_relative "../lib/card"
 
 class TestCard < Test::Unit::TestCase
   def setup

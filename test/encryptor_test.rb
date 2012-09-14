@@ -1,5 +1,5 @@
 require "test/unit"
-require_relative "encryptor"
+require_relative "../lib/encryptor"
 
 class TestEncryptor < Test::Unit::TestCase
   def setup
