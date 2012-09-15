@@ -1,6 +1,6 @@
 class Card
-  @@alphabetical = Hash[(1..52).zip(('A'..'Z').to_a +
-                                    ('A'..'Z').to_a)]
+  @@alphabetical = Hash[(1..54).zip(('A'..'Z').to_a +
+                                    ('A'..'Z').to_a << "" << "")]
 
   def initialize(value)
     @value = value
