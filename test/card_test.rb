@@ -6,4 +6,9 @@ class TestCard < Test::Unit::TestCase
     card = Card.new(26)
     assert_equal("Z", card.to_s)
   end
+
+  def test_52_maps_to_z
+    card = Card.new(52)
+    assert_equal("Z", card.to_s)
+  end
 end
