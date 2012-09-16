@@ -8,8 +8,8 @@ class Deck
 
   def move_down!(card_value, amount=1)
     deck_size = @cards.length
-    while amount >= deck_size
-      amount -= deck_size
+    while amount >= deck_size - 1
+      amount -= deck_size - 1
     end
     card_index = @cards.index { |card| card.value == card_value }
     card = @cards.delete_at(card_index)
