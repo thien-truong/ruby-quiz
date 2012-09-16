@@ -6,13 +6,17 @@ class Deck
     order.each { |card_value| @cards << Card.new(card_value) }
   end
 
-  def move_down!(card_value)
+  def move_down!(card_value, amount=1)
+    deck_size = @cards.length
+    while amount >= deck_size
+      amount -= deck_size
+    end
     card_index = @cards.index { |card| card.value == card_value }
     card = @cards.delete_at(card_index)
-    if card_index >= @cards.length
-      card_index = 0
+    if card_index + amount >= deck_size
+      card_index -= deck_size - 1
     end
-    @cards.insert(card_index + 1, card)
+    @cards.insert(card_index + amount, card)
   end
 
   def order

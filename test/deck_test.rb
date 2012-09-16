@@ -20,4 +20,13 @@ class TestDeck < Test::Unit::TestCase
     assert_equal(Array((2..53)).unshift(1, 54), @deck.order)
   end
 
+  def test_moves_joker_down_twice
+    @deck.move_down!(3, 2)
+    assert_equal(Array((6..54)).unshift(1, 2, 4, 5, 3), @deck.order)
+  end
+
+  def test_moves_down_57_cards
+    @deck.move_down!(53, 57)
+    assert_equal(Array((3..52)).unshift(1, 2, 53).push(54), @deck.order)
+  end
 end
