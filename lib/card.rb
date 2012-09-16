@@ -1,4 +1,5 @@
 class Card
+  attr_reader :value
   @@alphabetical = Hash[(1..54).zip(('A'..'Z').to_a +
                                     ('A'..'Z').to_a << "" << "")]
 
