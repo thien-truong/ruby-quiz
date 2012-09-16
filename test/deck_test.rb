@@ -14,4 +14,10 @@ class TestDeck < Test::Unit::TestCase
     @deck.move_down!(53)
     assert_equal(Array((1..52)) << 54 << 53, @deck.order)
   end
+
+  def test_moves_last_card_down_once
+    @deck.move_down!(54)
+    assert_equal(Array((2..53)).unshift(1, 54), @deck.order)
+  end
+
 end
