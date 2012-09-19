@@ -29,4 +29,9 @@ class TestDeck < Test::Unit::TestCase
     @deck.move_down!(1, 107)
     assert_equal(Array((3..54)).unshift(2, 1), @deck.order)
   end
+
+  def test_performs_triple_cut
+    @deck.triple_cut!(3, 52)
+    assert_equal(Array((3..52)).unshift(53, 54).push(1, 2), @deck.order)
+  end
 end

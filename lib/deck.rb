@@ -19,4 +19,17 @@ class Deck
   def order
     @cards.map { |card| card.value }
   end
+
+  def triple_cut!(first_card_value, second_card_value)
+    first_card_index = @cards.index do |card|
+      card.value == first_card_value
+    end
+    second_card_index = @cards.index do |card|
+      card.value == second_card_value
+    end
+    first_slice = @cards.slice(0...first_card_index)
+    second_slice = @cards[second_card_index + 1..-1]
+    middle_slice = @cards[first_card_index..second_card_index]
+    @cards = second_slice + middle_slice + first_slice
+  end
 end
