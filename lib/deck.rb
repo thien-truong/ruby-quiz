@@ -37,4 +37,10 @@ class Deck
     middle_slice = @cards[first_card_index..second_card_index]
     @cards = second_slice + middle_slice + first_slice
   end
+
+  def count_cut! number_of_cards
+    sliced_cards = @cards.slice! 0, number_of_cards
+    @cards.insert -2, *sliced_cards
+  end
+
 end
