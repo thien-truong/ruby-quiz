@@ -44,4 +44,10 @@ class TestDeck < Test::Unit::TestCase
     @deck.count_cut!(3)
     assert_equal(Array((4..53)).push(1, 2, 3, 54), @deck.order)
   end
+
+  def test_performs_bottom_card_count_cut
+    @deck = Deck.new(Array((3..54)).push(1, 2))
+    @deck.bottom_card_count_cut!
+    assert_equal(Array((5..54)).push(1, 3, 4, 2), @deck.order)
+  end
 end

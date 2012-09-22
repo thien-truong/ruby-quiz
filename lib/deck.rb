@@ -43,4 +43,9 @@ class Deck
     @cards.insert -2, *sliced_cards
   end
 
+  def bottom_card_count_cut!
+    last_card_value = @cards[-1].value
+    count_cut! last_card_value
+  end
+
 end
