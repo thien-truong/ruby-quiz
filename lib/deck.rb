@@ -52,4 +52,7 @@ class Deck
     @cards[count].to_s
   end
 
+  def find_output_letter
+    get_letter_after @cards[0].value
+  end
 end
