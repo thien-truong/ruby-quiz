@@ -54,6 +54,11 @@ class TestDeck < Test::Unit::TestCase
   def test_gets_letter_after_count
     assert_equal("C", @deck.get_letter_after(2))
   end
+  
+  def test_gets_letter_after_deck_size_count
+    @deck = Deck.new(Array((2..54)).push(1))
+    assert_equal("A", @deck.get_letter_after(54))
+  end
 
   def test_gets_letter_based_on_top_card_value
     assert_equal("B", @deck.find_output_letter)

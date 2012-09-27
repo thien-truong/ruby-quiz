@@ -49,6 +49,9 @@ class Deck
   end
   
   def get_letter_after count
+    if count >= @cards.length
+      count = -1
+    end
     @cards[count].to_s
   end
 
