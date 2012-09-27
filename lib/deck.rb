@@ -47,5 +47,9 @@ class Deck
     last_card_value = @cards[-1].value
     count_cut! last_card_value
   end
+  
+  def get_letter_after count
+    @cards[count].to_s
+  end
 
 end

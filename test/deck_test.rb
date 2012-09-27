@@ -50,4 +50,8 @@ class TestDeck < Test::Unit::TestCase
     @deck.bottom_card_count_cut!
     assert_equal(Array((5..54)).push(1, 3, 4, 2), @deck.order)
   end
+
+  def test_gets_letter_after_count
+    assert_equal("C", @deck.get_letter_after(2))
+  end
 end
