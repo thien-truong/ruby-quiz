@@ -24,4 +24,11 @@ class TestEncryptor < Test::Unit::TestCase
     assert_equal [20, 8, 9, 19, 9, 19, 1, 20, 5, 19, 20, 24, 24, 24, 24],
                  @encryptor.message_values
   end
+
+  def test_converts_keystream_to_number
+    @encryptor.generate_keystream
+    @encryptor.convert_keystream_to_number
+    assert_equal [4, 23, 10, 24, 8, 25, 18, 6, 4, 7, 20, 13, 19, 8, 16],
+                 @encryptor.keystream_values
+  end
 end
