@@ -28,9 +28,7 @@ class Deck
       card.value == second_card_value
     end
     if first_card_index > second_card_index
-      temporary_index = first_card_index
-      first_card_index = second_card_index
-      second_card_index = temporary_index
+      first_card_index, second_card_index = second_card_index, first_card_index
     end
     first_slice = @cards.slice(0...first_card_index)
     second_slice = @cards[second_card_index + 1..-1]
