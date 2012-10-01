@@ -18,4 +18,10 @@ class TestEncryptor < Test::Unit::TestCase
     @encryptor.generate_keystream
     assert_equal("DWJXH YRFDG TMSHP", @encryptor.keystream)
   end
+
+  def test_converts_message_to_number
+    @encryptor.convert_message_to_number
+    assert_equal [20, 8, 9, 19, 9, 19, 1, 20, 5, 19, 20, 24, 24, 24, 24],
+                 @encryptor.message_values
+  end
 end

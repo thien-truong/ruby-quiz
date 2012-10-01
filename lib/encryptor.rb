@@ -1,10 +1,12 @@
 class Encryptor
-  attr_reader :message, :keystream
+  attr_reader :message, :keystream, :message_values
+  @@numerical = Hash[('A'..'Z').zip(1..26)]
   
   def initialize(message, deck)
     @message = message
     @deck = deck
     @keystream = ""
+    @message_values = []
   end
 
   def prepare_message
@@ -40,5 +42,11 @@ class Encryptor
       count += 1
     end 
     @keystream.rstrip!
+  end
+
+  def convert_message_to_number
+    @message.gsub(/ /, '').each_char do |character|
+      @message_values << @@numerical[character]
+    end
   end
 end
