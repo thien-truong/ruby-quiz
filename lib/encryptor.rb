@@ -1,5 +1,5 @@
 class Encryptor
-  attr_reader :message, :keystream, :message_values, :keystream_values
+  attr_reader :message, :keystream, :message_values, :keystream_values, :message_and_keystream_values
   @@numerical = Hash[('A'..'Z').zip(1..26)]
   
   def initialize(message, deck)
@@ -53,6 +53,16 @@ class Encryptor
     convert_string_to_number(@keystream, @keystream_values)
   end
 
+  def add_message_and_keystream_values
+    @message_and_keystream_values = @message_values.zip(@keystream_values)
+                                                   .map do |message_value, keystream_value| 
+      max_val = 26
+      value = (message_value + keystream_value) % max_val
+      value += max_val if value == 0
+      value
+    end
+  end
+  
   private
   
   def convert_string_to_number(string, character_values)

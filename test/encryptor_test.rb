@@ -31,4 +31,13 @@ class TestEncryptor < Test::Unit::TestCase
     assert_equal [4, 23, 10, 24, 8, 25, 18, 6, 4, 7, 20, 13, 19, 8, 16],
                  @encryptor.keystream_values
   end
+
+  def test_adds_message_and_keystream_values_with_max_26
+    @encryptor.generate_keystream
+    @encryptor.convert_message_to_number
+    @encryptor.convert_keystream_to_number
+    @encryptor.add_message_and_keystream_values
+    assert_equal [24, 5, 19, 17, 17, 18, 19, 26, 9, 26, 14, 11, 17, 6, 14],
+                 @encryptor.message_and_keystream_values
+  end
 end
