@@ -7,7 +7,7 @@ class Deck
   end
 
   def move_down!(card_value, amount=1)
-    card_index = @cards.index { |card| card.value == card_value }
+    card_index = @cards.index { |card| card.to_i == card_value }
     card = @cards.delete_at(card_index)
     amount %= @cards.length
     if card_index + amount > @cards.length
@@ -17,15 +17,15 @@ class Deck
   end
 
   def order
-    @cards.map { |card| card.value }
+    @cards.map { |card| card.to_i }
   end
 
   def triple_cut!(first_card_value, second_card_value)
     first_card_index = @cards.index do |card|
-      card.value == first_card_value
+      card.to_i == first_card_value
     end
     second_card_index = @cards.index do |card|
-      card.value == second_card_value
+      card.to_i == second_card_value
     end
     if first_card_index > second_card_index
       first_card_index, second_card_index = second_card_index, first_card_index
@@ -42,7 +42,7 @@ class Deck
   end
 
   def bottom_card_count_cut!
-    last_card_value = @cards[-1].value
+    last_card_value = @cards[-1].to_i
     count_cut! last_card_value
   end
   
@@ -54,6 +54,6 @@ class Deck
   end
 
   def find_output_letter
-    get_letter_after @cards[0].value
+    get_letter_after @cards[0].to_i
   end
 end

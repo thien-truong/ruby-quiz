@@ -1,8 +1,6 @@
 class Encryptor
-  attr_reader :message, :keystream, :message_values, :keystream_values, :message_and_keystream_values
-
   @@numerical = Hash[('A'..'Z').zip(1..26)]
-  @@alphabet = Hash[(1..26).zip('A'..'Z')]
+  @@alphabetical = @@numerical.invert
   
   def initialize(message, deck)
     @message = message
@@ -21,6 +19,8 @@ class Encryptor
     convert_numbers_to_letters
     @message
   end
+
+  private
 
   def prepare_message
     @message.gsub! /[^a-zA-Z]/, ''
@@ -67,7 +67,8 @@ class Encryptor
 
   def add_message_and_keystream_values
     @message_and_keystream_values = @message_values.zip(@keystream_values)
-                                                   .map do |message_value, keystream_value| 
+                                                   .map do |message_value,
+                                                            keystream_value| 
       max_val = 26
       value = (message_value + keystream_value) % max_val
       value += max_val if value == 0
@@ -79,7 +80,7 @@ class Encryptor
     numbers_to_letters = []
     character_count = 1
     @message_and_keystream_values.each do |number|
-      numbers_to_letters << @@alphabet[number] 
+      numbers_to_letters << @@alphabetical[number] 
       if character_count % 5 == 0
         numbers_to_letters << ' '
       end
@@ -88,11 +89,10 @@ class Encryptor
     @message = numbers_to_letters.join.rstrip
   end
   
-  private
-  
   def convert_string_to_number(string, character_values)
     string.gsub(/ /, '').each_char do |character|
       character_values << @@numerical[character]
     end
+    character_values
   end
 end

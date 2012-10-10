@@ -1,13 +1,13 @@
 class Card
-  attr_reader :value
+  attr_reader :to_i
   @@alphabetical = Hash[(1..54).zip(('A'..'Z').to_a +
                                     ('A'..'Z').to_a << "" << "")]
 
   def initialize(value)
-    @value = value
+    @to_i = value
   end
 
   def to_s
-    @@alphabetical[@value]
+    @@alphabetical[@to_i]
   end
 end
