@@ -40,4 +40,13 @@ class TestEncryptor < Test::Unit::TestCase
     assert_equal [24, 5, 19, 17, 17, 18, 19, 26, 9, 26, 14, 11, 17, 6, 14],
                  @encryptor.message_and_keystream_values
   end
+
+  def test_converts_numbers_to_letters
+    @encryptor.generate_keystream
+    @encryptor.convert_message_to_number
+    @encryptor.convert_keystream_to_number
+    @encryptor.add_message_and_keystream_values
+    @encryptor.convert_numbers_to_letters
+    assert_equal "XESQQ RSZIZ NKQFN", @encryptor.message
+  end
 end

@@ -1,6 +1,8 @@
 class Encryptor
   attr_reader :message, :keystream, :message_values, :keystream_values, :message_and_keystream_values
+
   @@numerical = Hash[('A'..'Z').zip(1..26)]
+  @@alphabet = Hash[(1..26).zip('A'..'Z')]
   
   def initialize(message, deck)
     @message = message
@@ -61,6 +63,19 @@ class Encryptor
       value += max_val if value == 0
       value
     end
+  end
+
+  def convert_numbers_to_letters
+    numbers_to_letters = []
+    character_count = 1
+    @message_and_keystream_values.each do |number|
+      numbers_to_letters << @@alphabet[number] 
+      if character_count % 5 == 0
+        numbers_to_letters << ' '
+      end
+      character_count += 1
+    end
+    @message = numbers_to_letters.join.rstrip
   end
   
   private
