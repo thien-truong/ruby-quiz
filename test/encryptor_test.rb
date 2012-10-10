@@ -49,4 +49,9 @@ class TestEncryptor < Test::Unit::TestCase
     @encryptor.convert_numbers_to_letters
     assert_equal "XESQQ RSZIZ NKQFN", @encryptor.message
   end
+
+  def test_encrypts_message
+    @encryptor = Encryptor.new(@message, @deck)
+    assert_equal "XESQQ RSZIZ NKQFN", @encryptor.encrypt_message
+  end
 end

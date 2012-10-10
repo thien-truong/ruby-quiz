@@ -12,6 +12,16 @@ class Encryptor
     @keystream_values = []
   end
 
+  def encrypt_message
+    prepare_message
+    generate_keystream
+    convert_message_to_number
+    convert_keystream_to_number
+    add_message_and_keystream_values
+    convert_numbers_to_letters
+    @message
+  end
+
   def prepare_message
     @message.gsub! /[^a-zA-Z]/, ''
     @message.upcase!
