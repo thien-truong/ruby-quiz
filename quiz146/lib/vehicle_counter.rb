@@ -3,8 +3,7 @@ class VehicleCounter
     counter = 0
     skip_lines = 1
 
-    until input_file.eof
-      current_line = input_file.readline
+    input_file.each_line do |current_line|
       if skip_lines == 0
         skip_lines = determine_lines_to_skip(current_line)
         counter += 1
