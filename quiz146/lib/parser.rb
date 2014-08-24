@@ -6,18 +6,24 @@ class Parser
   end
 
   def generate_vehicles
-    skip_lines = 1
+    lines_until_second_of_next_vehicle = 1
     vehicle_streams = VehicleStreams.new
-    previous_line = 0
+    start_time = 0
 
     @input_file.each_line do |current_line|
-      if skip_lines == 0
-        skip_lines = determine_lines_to_skip(current_line)
-        new_vehicle_streams = add_vehicle_to_stream(current_line, previous_line)
+      if lines_until_second_of_next_vehicle == 0
+        lines_until_second_of_next_vehicle = determine_lines_to_skip(current_line)
+        new_vehicle_streams = add_vehicle_to_northbound_stream(start_time, current_line)
+        vehicle_streams.merge_streams(new_vehicle_streams)
+      elsif lines_until_second_of_next_vehicle == 3
+        lines_until_second_of_next_vehicle -= 1
+        new_vehicle_streams = add_vehicle_to_southbound_stream(start_time, current_line)
         vehicle_streams.merge_streams(new_vehicle_streams)
       else
-        skip_lines -= 1 if skip_lines > 0
-        previous_line = current_line.delete("A,B").to_i
+        if lines_until_second_of_next_vehicle > 0
+          lines_until_second_of_next_vehicle -= 1
+        end
+        start_time = capture_time(current_line)
       end
     end
     vehicle_streams
@@ -25,13 +31,23 @@ class Parser
 
   private
 
-  def add_vehicle_to_stream(current_line, previous_line)
+  def capture_time(line)
+    line.delete("AB").to_i
+  end
+
+  def add_vehicle_to_southbound_stream(start_time, current_line)
+    vehicle_streams = VehicleStreams.new
+    stop_time = capture_time(current_line)
+    vehicle_streams.add_southbound_vehicle(Vehicle.new(start_time, stop_time))
+    vehicle_streams
+  end
+
+  def add_vehicle_to_northbound_stream(start_time, current_line)
     vehicle_streams = VehicleStreams.new
 
     if car_is_going_north?(current_line)
-      vehicle_streams.add_northbound_vehicle(Vehicle.new(previous_line))
-    elsif car_is_going_south?(current_line)
-      vehicle_streams.add_southbound_vehicle(Vehicle.new(previous_line))
+      stop_time = capture_time(current_line)
+      vehicle_streams.add_northbound_vehicle(Vehicle.new(start_time, stop_time))
     end
 
     vehicle_streams
@@ -51,13 +67,13 @@ class Parser
 
   def determine_lines_to_skip(current_line)
     if car_is_going_north?(current_line)
-      skip_lines = 1
+      lines_until_second_of_next_vehicle = 1
     elsif car_is_going_south?(current_line)
-      skip_lines = 3
+      lines_until_second_of_next_vehicle = 3
     else
       raise 'Encountered invalid sensor name. Expected A or B.'
     end
-    skip_lines
+    lines_until_second_of_next_vehicle
   end
 
 end

@@ -1,11 +1,12 @@
 class Vehicle
-  attr_reader :time_stamp
+  attr_reader :start_time, :end_time
 
-  def initialize(time_stamp)
-    @time_stamp = time_stamp
+  def initialize(start_time, end_time)
+    @start_time = start_time
+    @end_time = end_time
   end
 
   def ==(vehicle)
-    @time_stamp == vehicle.time_stamp
+    @start_time == vehicle.start_time && @end_time == vehicle.end_time
   end
 end
