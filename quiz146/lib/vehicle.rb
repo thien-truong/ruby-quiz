@@ -1,12 +1,13 @@
 class Vehicle
-  attr_reader :start_time, :end_time
+  attr_reader :day_recorded, :start_time, :end_time
 
-  def initialize(start_time, end_time)
+  def initialize(day_recorded, start_time, end_time)
+    @day_recorded = day_recorded
     @start_time = start_time
     @end_time = end_time
   end
 
   def ==(vehicle)
-    @start_time == vehicle.start_time && @end_time == vehicle.end_time
+    @day_recorded == vehicle.day_recorded && @start_time == vehicle.start_time && @end_time == vehicle.end_time
   end
 end

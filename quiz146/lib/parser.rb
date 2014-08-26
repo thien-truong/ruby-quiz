@@ -8,22 +8,28 @@ class Parser
   def generate_vehicles
     lines_until_second_of_next_vehicle = 1
     vehicle_streams = VehicleStreams.new
-    start_time = 0
+    current_start_time = 0
+    previous_start_time = 0
+    day_recorded = 1
 
     @input_file.each_line do |current_line|
+      if previous_start_time > current_start_time
+        day_recorded = day_recorded + 1
+      end
+      previous_start_time = current_start_time
       if lines_until_second_of_next_vehicle == 0
         lines_until_second_of_next_vehicle = determine_lines_to_skip(current_line)
-        new_vehicle_streams = add_vehicle_to_northbound_stream(start_time, current_line)
+        new_vehicle_streams = add_vehicle_to_northbound_stream(day_recorded, current_start_time, current_line)
         vehicle_streams.merge_streams(new_vehicle_streams)
       elsif lines_until_second_of_next_vehicle == 3
         lines_until_second_of_next_vehicle -= 1
-        new_vehicle_streams = add_vehicle_to_southbound_stream(start_time, current_line)
+        new_vehicle_streams = add_vehicle_to_southbound_stream(day_recorded, current_start_time, current_line)
         vehicle_streams.merge_streams(new_vehicle_streams)
       else
         if lines_until_second_of_next_vehicle > 0
           lines_until_second_of_next_vehicle -= 1
         end
-        start_time = capture_time(current_line)
+        current_start_time = capture_time(current_line)
       end
     end
     vehicle_streams
@@ -35,19 +41,19 @@ class Parser
     line.delete("AB").to_i
   end
 
-  def add_vehicle_to_southbound_stream(start_time, current_line)
+  def add_vehicle_to_southbound_stream(day_recorded, start_time, current_line)
     vehicle_streams = VehicleStreams.new
     stop_time = capture_time(current_line)
-    vehicle_streams.add_southbound_vehicle(Vehicle.new(start_time, stop_time))
+    vehicle_streams.add_southbound_vehicle(Vehicle.new(day_recorded, start_time, stop_time))
     vehicle_streams
   end
 
-  def add_vehicle_to_northbound_stream(start_time, current_line)
+  def add_vehicle_to_northbound_stream(day_recorded, start_time, current_line)
     vehicle_streams = VehicleStreams.new
 
     if car_is_going_north?(current_line)
       stop_time = capture_time(current_line)
-      vehicle_streams.add_northbound_vehicle(Vehicle.new(start_time, stop_time))
+      vehicle_streams.add_northbound_vehicle(Vehicle.new(day_recorded, start_time, stop_time))
     end
 
     vehicle_streams
