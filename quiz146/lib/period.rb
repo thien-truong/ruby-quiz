@@ -1,5 +1,7 @@
 class Period
-  attr_reader :day_recorded, :interval_start, :interval_end, :number_of_vehicles
+  attr_reader :day_recorded, :interval_start, :interval_end
+  attr_accessor :number_of_vehicles
+
   def initialize(day_recorded, interval_start, interval_end, number_of_vehicles)
     @day_recorded = day_recorded
     @interval_start = interval_start
